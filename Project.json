@@ -1,0 +1,136 @@
+{
+  "app-state": {
+    "body": "A bloc-based state management solution on top of Router API for larger apps.\n\n## Features ##\n\n### Flexible page stack ###\n\nSome navigation packages require pre-defined stacks: for route `C`, the ancestors are always\n`B` and `A`. With this package, it is not the case. Any screen can open any other screen.\nThis is how book list might open a book details page:\n\n```dart\npageStacksBloc.push(\n  BookDetailsPage(bookId: id),\n);\n```\n\n### Declarative default stacks ###\n\nFor each URL, you can define the default stack of pages that show when this URL is navigated.\nFor book details, you may declare that the parent page should be the book list:\n\n```dart\n@override\nPageStackConfiguration get defaultStackConfiguration {\n  return PageStackConfiguration(\n    pageConfigurations: [\n      const BookListPageConfiguration(),\n      this,\n    ],\n  );\n}\n```\n\n### Separation of concerns ###\n\nEach screen uses up to 4 artifacts:\n\n- The screen widget.\n- Bloc for logic and navigation (optional).\n- `PageConfiguration`, a representation of URL (optional, use if you want URLs).\n- `Page`, a simple adapter to be stored in the stack of `Navigator`.\n\nThis provides a clear file structure:\n```\nlib\n|--pages\n|  |-- one\n|  |   |-- bloc.dart\n|  |   |-- configurations.dart\n|  |   |-- screen.dart\n|  |   `-- page.dart\n|  `-- two\n|      |-- bloc.dart\n|      |-- configurations.dart\n|      |-- screen.dart\n|      `-- page.dart\n...\n```\n\n### Blocs handle navigation ###\n\nYou normally back your screens with blocs to maintain the screen state (checkboxes,\ncounters, etc.). This package provides base classes for such blocs that also handle\nnavigation.\n\nImagine a traditional counter app but with the counter value in URL.\nThis is how a page bloc can update the URL:\n\n```dart\nvoid onIncrementPressed() {\n  _counter++;\n  emitState();            // Bloc state that the screen listens to.\n  emitConfiguration();    // Updates the URL with what getConfiguration() returns.\n}\n\n@override\nPageConfiguration getConfiguration() {\n  return CounterPageConfiguration(counter: _counter);\n}\n```\n\nThis is how state is applied to bloc when 'back' or 'forward' is pressed in the browser:\n\n```dart\n@override\nvoid setStateMap(Map<String, dynamic> state) {\n  _counter = state['counter'];\n  emitState();\n  emitConfiguration();\n}\n```\n\nBy default, Android back button closes the screen. A page bloc may override this to decrement\nthe counter and only close when reached zero:\n\n```dart\n@override\nFuture<bool> onBackPressed() {\n  if (_counter > 0) {\n    _counter--;\n    emitState();\n    emitConfiguration();\n    return Future.value(BackPressedResult.keep); // Prevents closing.\n  }\n  return Future.value(BackPressedResult.close);  // The default if you did not override the method.\n}\n```\n\nIf we had a dialog to manually enter the counter value, this is how we updated the bloc\nwhen its popped:\n\n```dart\n@override\nvoid onForegroundClosed(PageBlocCloseEvent event) {\n  if (event is CounterEditedEvent) {\n    _counter = event.counter;\n    emitState();\n    emitConfiguration();\n  }\n}\n```\n\nWe do not await dialog futures. This also means that one screen can return result\nto the one under it even if the whole stack was destroyed and re-created from URL.\n\n### Multiple page stacks ###\n\nIf you have bottom navigation buttons and want an independent page stack for each button,\nthis works out of the box.\n\nWhen the app is opened at a URL, it is converted to a `PageConfiguration` that knows\nwhich tab should be active:\n\n```dart\n@override\nString get defaultStackKey => TabEnum.books.name; // Your custom enum for tabs.\n```\n\nEach screen can be pushed to any stack:\n\n```dart\npageStacksBloc.currentStackBloc?.push(\n  BookDetailsPage(bookId: id),\n);\n```\n\nThis allows Instagram-like navigation, where a user profile may open in explore tab,\nlikes tab, or any other.\n\n## Usage ##\n\nTo get started, read these tutorials in this order:\n\n1. [Flutter Router API is not declarative. Here is why](https://medium.com/p/bd962e6bfb91)\n2. [Instagram-like navigation with Router API in Flutter](https://medium.com/p/a5851f1024d)\n3. [Adding web URLs to Flutter app using app_state package](https://medium.com/p/329cb5a77aac)\n4. [Tabs with independent navigation stacks in Flutter with app_state package](https://medium.com/p/cfb52d035da6)\n5. [Receiving result from modal routes in Flutter with app_state package](https://medium.com/p/811acedc5214)\n\nSee the example projects: https://github.com/alexeyinkin/flutter-app-state-examples",
+    "dateTimeRelease": "2022-01-06T00:00:00",
+    "description": "A Flutter library, a bloc-based state management solution on top of Router API for larger apps.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/flutter.png",
+    "role": "owner",
+    "tags": ["flutter", "dart"],
+    "title": "app_state Flutter Package",
+    "urls": [
+      {"url": "https://pub.dev/packages/app_state"},
+      {"url": "https://github.com/alexeyinkin/flutter-app-state"}
+    ],
+    "view": {
+      "backgroundColor": "2041C4FF",
+      "textColor": "FF04599C"
+    },
+    "year": 2022
+  },
+
+  "calltouch": {
+    "body": "Calltouch is the leading call-tracking and ad analytic platform in Russia. It has over 25’000 corporate customers including half of the construction and car dealership markets. The company maintains dozens of servers with millions lines of code of their software.\n\nI had been working there as a Senior PHP Developer for over a year.\n\nResponsibilities:\n- Auth system refactoring, finding and fixing security breaches.\n- Ad report generation with lots of metrics and statistics from various external platforms, mapping large amounts of data.\n- Notifications via Telegram Messenger.\n- Configuring static code analysis with [phpstan](https://github.com/phpstan/phpstan), donated [a major feature code](https://github.com/phpstan/phpstan-src/pull/196) to phpstan.\n- Improving test coverage with Codeception.\n\nWhen I was leaving, I was invited by the owner for an interview to another company of his. Must be showing I was doing well.",
+    "dateTimeEnd": "2020-09-18T00:00:00",
+    "dateTimeStart": "2019-07-29T00:00:00",
+    "description": "Full-time Senior PHP Developer at Calltouch, a leading call-tracking provider in Russia.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/calltouch/calltouch.png",
+    "role": "dev",
+    "tags": ["php", "symfony", "doctrine", "postgresql", "redis", "rabbitmq", "docker", "codeception"],
+    "title": "Calltouch",
+    "urls": [
+      {"url": "https://calltouch.ru"}
+    ],
+    "view": {
+      "backgroundColor": "FF1F282C",
+      "textColor": "FFFFFFFF"
+    },
+    "year": 2019
+  },
+
+  "courseplease.com": {
+    "body": "CoursePlease.com is my marketplace for photography teachers. It is currently under construction.\n\nThe backend is in PHP with MySQL. The frontend is made with Flutter and builds for Android, iOS and web from single code base. It relies on [Ably](https://ably.com) for event delivery.\n\nThis is the home page with a gallery of all teachers' works:\n\n![CoursePlease.com](https://static.alexeyinkin.com/projects/courseplease.com/1.jpeg)\n\nThis is how lessons are scheduled in chat:\n\n![CoursePlease.com Chat](https://static.alexeyinkin.com/projects/courseplease.com/3.jpeg)\n\nA teacher can link their Instagram account, and all new posts will automatically be downloaded to thier portfolio:\n\n![CoursePlease.com Sorting new posts](https://static.alexeyinkin.com/projects/courseplease.com/5.jpeg)\n",
+    "dateTimeStart": "2020-12-20T00:00:00",
+    "description": "A marketplace for teachers.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/courseplease.com/5.jpeg",
+    "role": "owner",
+    "tags": ["flutter", "dart", "php", "symfony", "mysql"],
+    "title": "CoursePlease.com",
+    "urls": [
+      {"url": "https://courseplease.com"},
+      {"url": "https://github.com/alexeyinkin/courseplease-client-flutter"}
+    ],
+    "view": {
+      "backgroundColor": "FF303030",
+      "textColor": "FFFFFFFF"
+    },
+    "year": 2022
+  },
+
+  "getsoft.ru": {
+    "body": "GetSoft.ru was a software marketplace before modern ones appeared. It was a website with PHP 4.3 backend and MySQL 3.23 database. I started it for myself as my first business. English version briefly existed at SoftLists.com.\n\nIn December 2003, I was probing free domain names. I stumbled upon getsoft.ru and registered it right away. Then I thought: \"OK, I have a domain for a software marketplace. I guess I now have to make one\".  By then I had been an immature game developer who was struggling to get somewhat 80 visitors a month on his homepage. I had been using early marketplaces and had a vision of what was inconvenient there. So I rushed to make my own one.\n\nI only had HTML experience at the time. So I found [a book on PHP](https://vk.com/doc1798445_481149970?hash=7gb6d6j15YchtrcL6GB4GziYGGZdCzQPnVEiW8qWe3s&dl=1xaIDNo8wKMfWZ4cu62oj3fMh14MR9p1ceU0InNtkGX), read it, made and launched the website on March 4, 2004.\n\nAmong unique features for the time in the Russian market, it had:\n\n- Alternative download links in case one breaks.\n- Links for source code for open-source.\n- Filters for platforms and license types.\n- Configurable search that scanned titles, author names, and description.\n- Pretty modern look.\n\nI grabbed emails, names, and software titles from [download.ru](https://web.archive.org/web/20040412033321/http://www.download.ru/), a most prominent competitor. I then sent thousands of automated personalized emails and got over 3000 software authors to sign up and publish their links on my marketplace.\n\nAll I had to do was vetting. I got decent organic traffic to that content. Monthly peak was 71'913 visitors in Jan 2010. Page views peaked at 175'856 in Dec 2007.\n\nIn the great recession of 2008, monetization ceased, so I lost interest. By the time markets recovered, peoples' habits on the internet had changed. More advanced aggregators emerged, communication moved to social networks, and I was late to retain the audience. So I blew it.\n\nOn the 10th anniversary, on March 4, 2014, I publicly ended the project making the website read-only. It is now a museum. Feel free to walk the Jurassic Park.",
+    "dateTimeEnd": "2014-03-04T00:00:00",
+    "dateTimeRelease": "2004-03-04T00:00:00",
+    "dateTimeStart": "2003-12-22T00:00:00",
+    "description": "A software marketplace that brought together over 3000 of software authors with many visitors over the years. Monthly peak was 71'913 visitors in Jan 2010. Page views peaked at 175'856 in Dec 2007.",
+    "imageUrl": "https://getsoft.ru/getsoft2.png",
+    "role": "owner",
+    "tags": ["php", "js", "css", "mysql"],
+    "title": "GetSoft.ru",
+    "urls": [
+      {"url": "https://getsoft.ru"},
+      {"url": "https://github.com/alexeyinkin/getsoft"},
+      {"url": "https://web.archive.org/web/20041127114314/http://www.softlists.com/", "title": "Briefly existed English version"}
+    ],
+    "view": {
+      "backgroundColor": "FFE0E0FF",
+      "textColor": "FF000080"
+    },
+    "year": 2004
+  },
+
+  "neural-tennis-js": {
+    "body": "This [Pong](https://en.wikipedia.org/wiki/Pong) clone features some A.I. It was created as an exercise in:\n- TensorFlow JS and neural networks.\n- Angular, TypeScript, Sass.\n- Workers.\n- Touch API and multitouch.\n- Fullscreen API.\n- SVG.\n\n## Demo\nLive demo: [https://inkin.ru/software/neural-tennis-js/demo/](https://inkin.ru/software/neural-tennis-js/demo/)\n\n![Screenshot](https://github.com/alexeyinkin/neural-tennis-js/raw/main/screen1.png)\n\n## Controls:\nKeyboard:\n- Blue Player: Keyboard arrows.\n- Red Player: A, D, W, S (turn off A.I. first).\n- Pause: Space.\n- Full Screen: Enter.\n\nOn touchscreen devices:\n- Touch the field to move.\n- Touch the center area to show Pause and Full Screen buttons.\n\nFull Screen mode is not supported on iOS due to system restrictions.\n\n## A.I. Features\n\nA.I. can play for any of the players, all of the players or none.\nTurn it on or off using buttons above and below the fields.\n\n### Tracing the ball\n\nA.I. has two models to trace the ball, and you can switch the two:\n- Linear model uses extrapolation to see where the ball will end up, and moves there. It is perfect in that.\n- Neural model initially gives random predictions but learns gradually. It starts to get it right after observing 100 balls and usually plays good after 200 balls.\n\n### Neural network prediction quality\n\nA neural network starts with random weights. It may suffer from the [dead ReLU problem](https://datascience.stackexchange.com/questions/5706/what-is-the-dying-relu-problem-in-neural-networks) and hardly learn much. Or it may learn quickly.\n\nThe chart shows the neural network progress. One line shows how bad the last position was predicted. The other one shows log10 of the mean standard error among learned balls. As the log10(MSE) approaches -2 and goes below, it is pretty good.\n\nIf the log10(MSE) did not go below -1.5 after 50 balls and is not sloping down, then the network had poor initial weights and many dead neurons, and reloading the game should help.\n\nTo have fun, train the network against the Linear extrapolation model, then take over and see how the network picks your style as well.\n\n### Kicking the ball\n\nA.I. has three models to kick the ball once it gets near, you can switch between them:\n- Kick in a random direction.\n- Kick front so the ball tilt does not change.\n- Kick sideways to increase the tilt.\n\nAny kick model can run with any tracing model.\n\n### Saving and loading the neural network\n\nTo save your time you may load pre-trained network from the `pre-trained` directory. You may also save the network. Use the buttons above and below the field. They are visible when the network is in control.\n\nThe format is JSON with all the observed balls and current network weights.\n\nThe network layout is hardcoded. If you change it, you will not be able to load model dumps saved from models with other layouts.\n\n## Architecture\n\nThe core object is `Engine`. It creates the players, the balls, and the models, and it ticks time.\n\nOn each `tick()` the engine moves objects, checks for collisions, and checks for goals.\n\nEach player has both manual and A.I. control models associated with them with one being active at the time.\n\nEach A.I. control model in turn has 2 'catch' models and 3 'kick' models, they are switched with the buttons.\n\nEach player's neural network is trained in a separate worker so that it does not slow down the UI. With each new observed ball `NeuralCatchModel` sends all historical data to the worker to re-iterate the training.\n\nAs we need predictions fast, we cannot wait for the network in the worker as it might be training. For that purpose `NeuralCatchModel` has a local copy of the same network which it uses for predictions. Each time the network in the worker finishes training, the worker sends new weights back to `NeuralCatchModel`, and the local model gets updated.\n\n## Things to try if I or you have time\n\n- Use canvas instead of DOM nodes for players, balls and field areas. DOM was only chosen for Angular practice. Canvas should be faster.\n- Speed up the learning against another A.I. player. Such a simulation does not have to run in real time for humans with redrawing players and balls.\n- `NeuralKickModel` would be fun. It should use another neural network to determine kick direction. Gradually it would learn to kick to the farthest corner from the opponent.\n- Allow to change the network layout at runtime. Allow to load networks from dumps with different layouts.\n- Experiment with activation functions as currently ReLU can produce dead neurons. There's a nasty workaround involving calling `MyTensorFlowLib.isTrainable()` which prevents the entire network from starting up dead but many neurons are out of play anyway.\n- Convert to a native app.\n\n## How to Run\n\nTo build the project locally, you need to install Angular: https://angular.io/guide/setup-local\n\nAfter that you can run development server or create a production build to upload static files anywhere. \n\n### Development server\n\nRun `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.\n\n### Build\n\nRun `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.\n",
+    "dateTimeRelease": "2020-11-24T00:00:00",
+    "dateTimeStart": "2020-11-17T00:00:00",
+    "description": "A pong game clone with Angular and TensorFlow that learns as you play.",
+    "imageUrl": "https://github.com/alexeyinkin/neural-tennis-js/raw/main/screen1.png",
+    "role": "owner",
+    "tags": ["angular", "js", "typescript", "tensorflow", "neural", "ai"],
+    "title": "Neural Tennis JS",
+    "urls": [
+      {"url": "https://github.com/alexeyinkin/neural-tennis-js"}
+    ],
+    "view": {
+      "backgroundColor": "FFFFFFFF",
+      "textBackgroundColor": "C0FFFFFF",
+      "textColor": "FF800000"
+    },
+    "year": 2020
+  },
+
+  "phpstan": {
+    "body": "PHPStan is the most popular static analyzer for PHP.\nI made a significant improvement to it and donated the code.\n\nThe problem:\n\nMethod arguments can be annotated with PHPDoc comments\nto provide type info that cannot be represented in the code itself,\ne.g. array types. However, PHPStan never supported inheritance\nfor PHPDoc comments meaning that each overridden method had to repeat\nall arguments' types in case it expanded the type of one particular\nargument or narrowed down the return type.\n\nI [implemented the functionality for PHPDoc inheritance](https://github.com/phpstan/phpstan-src/pull/196).\n\nBefore:\n\n```php\nclass Foo {\n    /**\n     * @param DateTimeInterface[] $arr\n     * @return DateTime[]\n     */\n    public function method(array $arr): array { /* ... */ }\n}\n\nclass Bar extends Foo {\n    /**\n     * @param DateTime[] $arr Expanded argument type.\n     * !!! Return type is lost to PHPStan if not repeated !!!\n     */\n    public function method(array $arr): array { /* ... */ }\n}\n\nclass Baz extends Bar {\n    /**\n     * !!! $arr type is lost to PHPStan if not repeated !!!\n     * @return DateTimeInterface Narrowed down return type.\n     */\n    public function method(array $arr): array { /* ... */ }\n}\n```\n\nThis was extremely inconvenient given that most IDEs did handle this inheritance,\nand programmers were reluctant to duplicate types for static analysis alone.\nThis prevented the adoption of PHPStan in [Calltouch](https://calltouch.ru), a company I worked at the time.\n\nAfter my fix, the new PHPStan was integrated to the CI pipeline improving code quality\nin my the company and in many others.\n\nPHPStan has 11k stars on GitHub and is the most popular project I contributed code to\nas of writing.\n",
+    "dateTimeRelease": "2020-05-08T00:00:00",
+    "description": "A significant improvement of the most popular static analyzer for PHP.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/phpstan/phpstan.png",
+    "role": "dev",
+    "tags": ["php"],
+    "title": "PHPStan Improvement",
+    "urls": [
+      {"url": "https://phpstan.org"},
+      {"url": "https://github.com/phpstan/phpstan-src/pull/196", "title": "The contribution"}
+    ],
+    "view": {
+      "backgroundColor": "FF56639B",
+      "textColor": "FFFFFFFE"
+    },
+    "year": 2020
+  },
+
+  "redalbum": {
+    "body": "RedAlbum does school graduates photography. It operates in 22 cities of Russia and employs dozens of photographers and designers. On a website, customers can choose photos for each student and teacher, can comment on layout drafts, and submit the albums to a printing house.\n\nThe company had to scale and improve automation, and it was challenging with their legacy CMS. I did the following improvements for them:\n\n- Continuous integration.\n- Improved customer experience with an outline of what's expected of them on each step so as to reduce support requests.\n- Text reminders and notifications on various actions.\n- Payments and tax automation.\n- Sorting and copying photos and videos on various stages of picking and approval.\n- Expanded Google Calendar integration.\n- An interface for designers to pick orders for processing.\n- Tons of fixes including security.\n\nThis helped the company to survive the high season of 2022.\n",
+    "dateTimeStart": "2022-03-24T00:00:00",
+    "description": "An online service for graduates to schedule photo shootings, and then to order and compile photo albums.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/redalbum/redalbum.jpeg",
+    "role": "dev",
+    "tags": ["php", "mysql", "js", "jquery", "css"],
+    "title": "RedAlbum",
+    "urls": [
+      {"url": "https://redalbum.ru"}
+    ],
+    "view": {
+      "textBackgroundColor": "E0FFFFFF"
+    },
+    "year": 2022
+  }
+}

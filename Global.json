@@ -1,0 +1,23 @@
+{
+  "Global": {
+    "contacts": [
+      {
+        "type": "email",
+        "value": "leha@inkin.ru"
+      },
+      {
+        "type": "instagram",
+        "value": "alexey.inkin"
+      },
+      {
+        "type": "vk",
+        "value": "ainkin"
+      }
+    ],
+    "imageUrl": "https://static.alexeyinkin.com/contact/me.jpeg",
+    "title": "Alexey Inkin",
+    "versions": {
+      "min": "0.1.0"
+    }
+  }
+}
