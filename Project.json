@@ -80,7 +80,7 @@
 
   "keyed-collection-widgets": {
     "body": "These are replacements to `BottomNavigationBar`, `IndexedStack` and `TabController` that use\nitem keys instead if numeric indexes.\n\n## Problem ##\n\nWith traditional widgets you write something like\n```dart\nconst tabFavorites = 0;\nconst tabSearch = 1;\n// ...\nif (tabIndex == tabFavorites) {\n  // ...\n}\n```\nIf items in your bar can change, you get an error-prone conversion from indexes to meanings.\nAlso with mature architecture you tend to use `enum` for your tabs, and even with constant bar items\nyou must write code to convert between `enum` and `int`.\n\n## Usage ##\n\nWith this package you can use your `enum` directly with collection widgets.\nSee the full runnable example in the `example` folder.\n\n### KeyedBottomNavigationBar and KeyedStack\n\n```dart\nenum MyTab {favorites, search}\n\nclass _MyHomeScreenState extends State<MyHomeScreen> {\n  MyTab _tab = MyTab.favorites;\n\n  @override\n  Widget build(BuildContext context) {\n    // This is a simplified example: IndexedStack and KeyedStack are only\n    // meaningful if they contain stateful widgets to preserve state\n    // between switches.\n    return Scaffold(\n      body: KeyedStack<MyTab>(\n        itemKey: _tab,\n        children: const {\n          MyTab.favorites: Center(child: Text('Favorites')),\n          MyTab.search: Center(child: Text('Search')),\n        },\n      ),\n      bottomNavigationBar: KeyedBottomNavigationBar<MyTab>(\n        currentItemKey: _tab,\n        items: const {\n          MyTab.favorites: BottomNavigationBarItem(\n            icon: Icon(Icons.star),\n            label: 'Favorites',\n          ),\n          MyTab.search: BottomNavigationBarItem(\n            icon: Icon(Icons.search),\n            label: 'Search',\n          ),\n        },\n        onTap: (tab) => setState((){ _tab = tab; }),\n      ),\n    );\n  }\n}\n```\n\n### KeyedTabController, KeyedTabBar, KeyedTabBarView\n\n```dart\nenum MyTab {one, two, three}\n\nclass _MyHomeScreenState extends State<MyHomeScreen> with TickerProviderStateMixin {\n  late final KeyedTabController<MyTab> _tabController;\n\n  @override\n  void initState() {\n    super.initState();\n    _tabController = KeyedTabController<MyTab>(\n      initialKey: MyTab.three,\n      keys: [MyTab.one, MyTab.two, MyTab.three],\n      vsync: this,\n    );\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return Column(\n      children: [\n        KeyedTabBar(\n          tabs: {\n            for (final key in _tabController.keys)\n              key: Tab(child: Text(key.toString())),\n          },\n          controller: _tabController,\n          labelColor: Theme.of(context).colorScheme.secondary,\n        ),\n        Expanded(\n          child: KeyedTabBarView(\n            children: {\n              for (final key in _tabController.keys)\n                key: Text(\"$key content\"),\n            },\n            controller: _tabController,\n          ),\n        ),\n      ],\n    );\n  }\n}\n```\n\nSome more advantages of `enum` over indexes:\n* No way for the value to fall out of range.\n* Easier debugging with IDE tools.\n* You will never use magic numbers for indexes.\n\n`KeyedBottomNavigationBar` and `KeyedStack` support all the arguments of their traditional counterparts.\nThe only difference is that current keys are required and do not default to first element.",
-    "dateTimeReleased": "2021-11-26T00:00:00",
+    "dateTimeRelease": "2021-11-26T00:00:00",
     "description": "BottomNavigationBar, IndexedStack and TabController that use item keys instead of indexes.",
     "imageUrl": "https://static.alexeyinkin.com/projects/flutter.png",
     "role": "owner",
@@ -97,9 +97,28 @@
     "year": 2021
   },
 
+  "model-editors": {
+    "body": "This package provides controllers and editors for complex models and lists\nand is inspired by simplicity of `TextEditingController`.\nIt encapsulates state management so you don't have to do a single `setState(){}`.\n\nSee the example on how to create an editor like this:\n\n![Screenshot of a book editor](https://raw.githubusercontent.com/alexeyinkin/flutter-model-editors/main/example/book-editor.png)\n\nThis package provides the following controllers:\n- `AbstractListEditingController` which is a `ValueNotifier` of `List<T?>`.\n  It takes care for adding, deleting and reordering of list items.\n  Just initialize it with a list of your models and then read the edited list.\n- `CheckboxGroupEditingController` which is a `ValueNotifier` of `List<T>`.\n  It takes care for storing multiple values according to the user checking\n  and unchecking individual boxes.\n\nThis package provides the following widgets which use the mentioned controllers:\n- `ColumnListEditor` which shows individual editors and allows to delete them.\n- `ReorderableListViewEditor` which also allows reordering.\n- `MaterialCheckboxColumn` which shows a checkbox group in a column.\n\nA few widgets and controllers that are not mentioned here are experimental\nand not recommended for use.\n\n## Additional Information ##\n\nThe controllers in this package are pretty stable and are intended for public use.\nThe widgets on the other hand are mostly ad-hoc and are in development.\nThey lack many properties and customization.\nIf you wish to help, file an issue with your idea before contributing,\nand I will see how to incorporate it.\n",
+    "dateTimeRelease": "2021-11-24T00:00:00",
+    "description": "Editors for complex models and lists inspired by simplicity of TextEditingController, without manual state management.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/model-editors/book-editor.png",
+    "role": "owner",
+    "tags": ["flutter", "dart"],
+    "title": "model_editors Flutter Package",
+    "urls": [
+      {"url": "https://pub.dev/packages/model_editors"},
+      {"url": "https://github.com/alexeyinkin/flutter-model-editors"}
+    ],
+    "view": {
+      "textBackgroundColor": "E0FFFFFF",
+      "textColor": "FF04599C"
+    },
+    "year": 2021
+  },
+
   "model-interfaces": {
     "body": "This package provides common interfaces for your models:\n\n* `WithId<T>`. For your models that have IDs. `T` is commonly being `int` or `String`.\n\n* `WithTitle`. For your models that have a concept of a visible title.\n\n* `WithIdTitle<T>`. For your models that have both.\nYou often need models of only ID and title. For this reason, it is a class\nnot an interface. But you can use it as an interface by implementing it\nin your models.\n\n* `WithChildren<C>`, `WithParent<P>`. For your models that have some hierarchy.\n`C` and `P` can be the same as the implementing class for homogeneous hierarchy.\n\n* `WithIdChildrenParent<I, C, P>`, `WithIdTitleChildrenParent<I, C, P>`.\nOther useful combinations.\n\n* `Normalizable`. Declares `toJson()`.\n\n## Additional information\n\nThis package is created mostly for my internal use so it is not documented well.\nExpect breaking changes.\n\nFeel free to file issues if you find bugs or want some extra features.\nBefore contributing, it is a good idea to file an issue first to discuss it.",
-    "dateTimeReleased": "2021-10-25T00:00:00",
+    "dateTimeRelease": "2021-10-25T00:00:00",
     "description": "Common interfaces for your models that have IDs, titles, etc.",
     "imageUrl": "https://static.alexeyinkin.com/projects/dart.png",
     "role": "owner",
@@ -170,5 +189,24 @@
       "textBackgroundColor": "E0FFFFFF"
     },
     "year": 2022
+  },
+
+  "same-type-streams-builders": {
+    "body": "This widget produces nested `StreamBuilder` widgets for your streams.\n\n## Usage\n\n```dart\nfinal stream1 = Stream<int>.periodic(Duration(seconds: 1), (x) => x);\nfinal stream2 = Stream<int>.periodic(Duration(seconds: 2), (x) => x);\nfinal stream3 = Stream<int>.periodic(Duration(seconds: 3), (x) => x);\n\n\nWidget build(BuildContext context) {\n  return SameTypeStreamsBuilder<int>(\n    streams: [stream1, stream2, stream3],\n    builder: (context, snapshots) {\n      return Text(\n        'stream1: ${snapshots[0].data} - stream2: ${snapshots[1].data} - stream3: ${snapshots[2].data}',\n      );\n    },\n  );\n}\n```\n\n## Additional information\n\nThis widget is best if your streams are of the same type and their count is not known\nat compile time.\n\nIf your streams are of different types,\nyou technically may use `dynamic` as their common type and then cast the snapshot data to\nyour types. However, in this case it is best to use\n[multiple_stream_builder package](https://pub.dev/packages/multiple_stream_builder)\nwhich has separate type for each stream (unrelated to me).\n",
+    "dateTimeRelease": "2021-11-21T00:00:00",
+    "description": "A builder widget for multiple streams of the same type.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/flutter.png",
+    "role": "owner",
+    "tags": ["flutter", "dart"],
+    "title": "same_type_streams_builder Flutter Package",
+    "urls": [
+      {"url": "https://pub.dev/packages/same_type_streams_builder"},
+      {"url": "https://github.com/alexeyinkin/flutter-same-type-streams-builder"}
+    ],
+    "view": {
+      "backgroundColor": "2041C4FF",
+      "textColor": "FF04599C"
+    },
+    "year": 2021
   }
 }
