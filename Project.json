@@ -97,6 +97,25 @@
     "year": 2021
   },
 
+  "limit-rate": {
+    "body": "Guards access to a given resource according to request rate limits.\n\n## Usage ##\n\nIn this setup, the handler may be called at most once per second and at most 10 times a minute.\nCalls over that limit will be delayed.\n\n```dart\nvoid main() async {\n  final delayer = MessageDelayer<int, String>(\n    rateLimits: [\n      const RateLimit(requestCount: 1, timeMs: 1000),\n      const RateLimit(requestCount: 10, timeMs: 60000),\n    ],\n    handler: (n) => n.toString(),\n  );\n\n  final str = await delayer.sendMessage(1);\n}\n```\n",
+    "dateTimeRelease": "2022-04-28T00:00:00",
+    "description": "Guards access to a given resource according to request rate limits.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/dart.png",
+    "role": "owner",
+    "tags": ["dart"],
+    "title": "limit_rate Dart Package",
+    "urls": [
+      {"url": "https://pub.dev/packages/limit_rate"},
+      {"url": "https://github.com/alexeyinkin/dart-limit-rate"}
+    ],
+    "view": {
+      "backgroundColor": "2041C4FF",
+      "textColor": "FF04599C"
+    },
+    "year": 2022
+  },
+
   "model-editors": {
     "body": "This package provides controllers and editors for complex models and lists\nand is inspired by simplicity of `TextEditingController`.\nIt encapsulates state management so you don't have to do a single `setState(){}`.\n\nSee the example on how to create an editor like this:\n\n![Screenshot of a book editor](https://raw.githubusercontent.com/alexeyinkin/flutter-model-editors/main/example/book-editor.png)\n\nThis package provides the following controllers:\n- `AbstractListEditingController` which is a `ValueNotifier` of `List<T?>`.\n  It takes care for adding, deleting and reordering of list items.\n  Just initialize it with a list of your models and then read the edited list.\n- `CheckboxGroupEditingController` which is a `ValueNotifier` of `List<T>`.\n  It takes care for storing multiple values according to the user checking\n  and unchecking individual boxes.\n\nThis package provides the following widgets which use the mentioned controllers:\n- `ColumnListEditor` which shows individual editors and allows to delete them.\n- `ReorderableListViewEditor` which also allows reordering.\n- `MaterialCheckboxColumn` which shows a checkbox group in a column.\n\nA few widgets and controllers that are not mentioned here are experimental\nand not recommended for use.\n\n## Additional Information ##\n\nThe controllers in this package are pretty stable and are intended for public use.\nThe widgets on the other hand are mostly ad-hoc and are in development.\nThey lack many properties and customization.\nIf you wish to help, file an issue with your idea before contributing,\nand I will see how to incorporate it.\n",
     "dateTimeRelease": "2021-11-24T00:00:00",
@@ -114,6 +133,27 @@
       "textColor": "FF04599C"
     },
     "year": 2021
+  },
+
+  "model-fetch": {
+    "body": "A lazy load BLoC wrapper for your data source, an abstract layer and a Firestore implementation.",
+    "dateTimeRelease": "2022-04-30T00:00:00",
+    "description": "A lazy load BLoC wrapper for your data source, an abstract layer and a Firestore implementation.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/flutter.png",
+    "role": "owner",
+    "tags": ["flutter", "dart", "firebase", "firestore"],
+    "title": "model_fetch Flutter Package Family",
+    "urls": [
+      {"url": "https://pub.dev/packages/model_fetch"},
+      {"url": "https://pub.dev/packages/model_fetch_firestore"},
+      {"url": "https://pub.dev/packages/model_fetch_flutter"},
+      {"url": "https://github.com/alexeyinkin/dart-model-fetch"}
+    ],
+    "view": {
+      "backgroundColor": "2041C4FF",
+      "textColor": "FF04599C"
+    },
+    "year": 2022
   },
 
   "model-interfaces": {
@@ -153,6 +193,25 @@
       "textColor": "FF800000"
     },
     "year": 2020
+  },
+
+  "onmessage": {
+    "body": "A stream wrapping JavaScript's `window.onmessage` that is safe to import even on platforms\nother than web.\n\n## Purpose ##\n\nIn web apps, you can listen to events from other frames like this:\n\n```dart\nimport 'dart:html' as html;\n\nvoid main() {\n  html.window.onMessage.listen((html.MessageEvent event) {\n    // Handle.\n  });\n  // ...\n}\n```\n\nHowever, `dart:html` is not available on platforms other than web. If you use it,\nyour app cannot be built there.\n\nThis package provides a wrapper for that stream of messages that can be used on all platforms.\nOn platforms other than web, the stream would just produce no events.\n\n## Usage ##\n\n```dart\nimport 'package:onmessage/onmessage.dart';\n\nvoid main() {\n  OnMessage.instance.stream.listen((MessageEvent event) {\n    // Handle.\n  });\n  // ...\n}\n```\n\n`MessageEvent` class from this package is an independent class with fields copied from the original\n`html.MessageEvent`. It is provided so that you can have an API independent from web.\n",
+    "dateTimeRelease": "2022-06-17T00:00:00",
+    "description": "A stream wrapping JavaScript's window.onmessage that is safe to import even on platforms other than web.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/flutter.png",
+    "role": "owner",
+    "tags": ["flutter", "dart"],
+    "title": "onmessage Flutter Package",
+    "urls": [
+      {"url": "https://pub.dev/packages/onmessage"},
+      {"url": "https://github.com/alexeyinkin/flutter-onmessage"}
+    ],
+    "view": {
+      "backgroundColor": "2041C4FF",
+      "textColor": "FF04599C"
+    },
+    "year": 2022
   },
 
   "phpstan": {
