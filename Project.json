@@ -18,6 +18,26 @@
     "year": 2022
   },
 
+  "arkamost.ru": {
+    "todo": "Find the exact date",
+    "body": "A website for a fireproof chemicals vendor.\n\n![Image](https://static.alexeyinkin.com/projects/arkamost.ru/arkamost.ru.png)\n",
+    "dateTimeRelease": "2008-09-01T00:00:00",
+    "description": "A website for a fireproof chemicals vendor.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/arkamost.ru/arkamost.ru.png",
+    "role": "dev",
+    "tags": ["php", "mysql", "js", "jquery", "design"],
+    "title": "ArkaMost.ru",
+    "urls": [
+      {"url": "https://web.archive.org/web/20180629122641/http://www.arkamost.ru:80/", "title": "Archived copy"}
+    ],
+    "view": {
+      "backgroundColor": "FFFFFFFF",
+      "textBackgroundColor": "C0FFFFFF",
+      "textColor": "FF004080"
+    },
+    "year": 2008
+  },
+
   "calltouch": {
     "body": "Calltouch is the leading call-tracking and ad analytic platform in Russia. It has over 25’000 corporate customers including half of the construction and car dealership markets. The company maintains dozens of servers with millions lines of code of their software.\n\nI had been working there as a Senior PHP Developer for over a year.\n\nResponsibilities:\n- Auth system refactoring, finding and fixing security breaches.\n- Ad report generation with lots of metrics and statistics from various external platforms, mapping large amounts of data.\n- Notifications via Telegram Messenger.\n- Configuring static code analysis with [phpstan](https://github.com/phpstan/phpstan), donated [a major feature code](https://github.com/phpstan/phpstan-src/pull/196) to phpstan.\n- Improving test coverage with Codeception.\n\nWhen I was leaving, I was invited by the owner for an interview to another company of his. Must be showing I was doing well.",
     "dateTimeEnd": "2020-09-18T00:00:00",
