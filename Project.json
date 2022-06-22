@@ -38,6 +38,24 @@
     "year": 2008
   },
 
+  "autolight-nn": {
+    "todo": "Find the exact date",
+    "body": "My first website hire.\n\nAutoLight NN is a car parts company and tuning service. I had been formatting images and\ntables on their website back in the days when it looked like this:\n\n![Image](https://static.alexeyinkin.com/projects/autolight-nn/bmw-e36.png)\n",
+    "dateTimeRelease": "2005-01-01T00:00:00",
+    "description": "My first website hire.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/autolight-nn/autolight-nn.png",
+    "role": "dev",
+    "tags": ["html"],
+    "title": "AutoLight NN Maintenance",
+    "urls": [
+      {"url": "https://www.autolight-nn.ru"}
+    ],
+    "view": {
+      "textColor": "FF1A2F4C"
+    },
+    "year": 2005
+  },
+
   "calltouch": {
     "body": "Calltouch is the leading call-tracking and ad analytic platform in Russia. It has over 25’000 corporate customers including half of the construction and car dealership markets. The company maintains dozens of servers with millions lines of code of their software.\n\nI had been working there as a Senior PHP Developer for over a year.\n\nResponsibilities:\n- Auth system refactoring, finding and fixing security breaches.\n- Ad report generation with lots of metrics and statistics from various external platforms, mapping large amounts of data.\n- Notifications via Telegram Messenger.\n- Configuring static code analysis with [phpstan](https://github.com/phpstan/phpstan), donated [a major feature code](https://github.com/phpstan/phpstan-src/pull/196) to phpstan.\n- Improving test coverage with Codeception.\n\nWhen I was leaving, I was invited by the owner for an interview to another company of his. Must be showing I was doing well.",
     "dateTimeEnd": "2020-09-18T00:00:00",
