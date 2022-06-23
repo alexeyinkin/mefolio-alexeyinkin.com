@@ -25,7 +25,7 @@
     "description": "A website for a fireproof chemicals vendor.",
     "imageUrl": "https://static.alexeyinkin.com/projects/arkamost.ru/arkamost.ru.png",
     "role": "dev",
-    "tags": ["php", "mysql", "js", "jquery", "design"],
+    "tags": ["php", "mysql", "js", "jquery", "css", "design"],
     "title": "ArkaMost.ru",
     "urls": [
       {"url": "https://web.archive.org/web/20180629122641/http://www.arkamost.ru:80/", "title": "Archived copy"}
@@ -92,6 +92,24 @@
       "textColor": "FFFFFFFF"
     },
     "year": 2022
+  },
+
+  "dentals.ru": {
+    "todo": "Find the exact date",
+    "body": "Dental Studio is one of the leading dentistry clinics in Nizhny Novgorod, one of the\nlargest cities in Russia.\n\nI had been making websites for them since 2010 till 2013. This is the first version:\n\n![Image](https://static.alexeyinkin.ru/projects/dentals.ru/1.jpg)\n![Image](https://static.alexeyinkin.ru/projects/dentals.ru/2.jpg)\n![Image](https://static.alexeyinkin.ru/projects/dentals.ru/3.jpg)\n![Image](https://static.alexeyinkin.ru/projects/dentals.ru/4.jpg)\n\nI ended the support in 2012, and the new version was made by another studio.\nThen in 2013 I did some minor improvement for them again.\n\nI am grateful to Dental Studio because they were my first really famous customer,\nso this job gave me a lot of credit. \nBefore I never thought that famous companies are ruled by ordinary people just like us.\nSo this customer something special for me.\n",
+    "dateTimeRelease": "2010-12-31T00:00:00",
+    "description": "A website for one of the leading dentistry clinics in Nizhny Novgorod.",
+    "imageUrl": "https://static.alexeyinkin.com/projects/dentals.ru/dentals.ru.png",
+    "role": "dev",
+    "tags": ["php", "mysql", "js", "jquery", "css", "design"],
+    "title": "Dental Studio NN Website",
+    "urls": [
+      {"url": "https://dentals.ru"}
+    ],
+    "view": {
+      "textColor": "FF171314"
+    },
+    "year": 2010
   },
 
   "getsoft.ru": {
